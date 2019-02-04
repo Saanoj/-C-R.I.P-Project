@@ -1,0 +1,6 @@
+# depslib dependency file v1.0
+1549298793 source:c:\users\jonas\onedrive\documents\r.i.p-project\api test\main.c
+	<stdlib.h>
+	<stdio.h>
+	<string.h>
+
