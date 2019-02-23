@@ -19,7 +19,7 @@ static size_t write_data(void *ptr, size_t size, size_t nmemb, void *stream)
 
 int main(int argc, char *argv[])
 {
-    doFile("france");
+    doFile("germany");
     char * result = malloc(file2String());
     result=file2String();
     printJson(result);
@@ -31,16 +31,17 @@ void printJson(char* string){
     cJSON *name = NULL;
     cJSON *names = NULL;
     cJSON *monitor = cJSON_Parse(string);
-    names = cJSON_GetObjectItemCaseSensitive(monitor, "name");
-   // cJSON_ArrayForEach(name, names) {
-
+   //cJSON_AddItemToObject(names, "name",monitor);
+    cJSON_ArrayForEach(name, monitor) {
         if (cJSON_IsString(name) && (name->valuestring != NULL))
             printf("\n\nNom du pays : %s", name->valuestring);
+
         else {
             printf("\n\nThis country does not exist !");
             return;
         }
-   // }
+        break;
+    }
 }
 
 char * file2String(){
@@ -50,9 +51,9 @@ char * file2String(){
 
     if (f)
     {
-      fseek (f, 0, SEEK_END);
+      fseek (f, -1, SEEK_END);
       length = ftell (f);
-      fseek (f, 0, SEEK_SET);
+      fseek (f, +1, SEEK_SET);
       buffer = malloc (length);
       if (buffer)
       {
@@ -111,7 +112,7 @@ void doFile(char * country){
     curl_easy_cleanup(curl_handle);
 
     curl_global_cleanup();
-    //system("cls");
+    system("cls");
     }
 
 
