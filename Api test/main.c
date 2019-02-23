@@ -4,7 +4,7 @@
 #include "cJSON.h"
 #include <curl/curl.h>
 
-
+char * file2String();
 void zerofgets(char * str, int size)
 {
     fflush(stdin);
@@ -19,10 +19,58 @@ static size_t write_data(void *ptr, size_t size, size_t nmemb, void *stream)
 
 int main(int argc, char *argv[])
 {
-    CURL *curl_handle;
-    static const char *pagefilename = "page.JSON";
-    FILE *pagefile;
+    doFile("france");
+    char * result = malloc(file2String());
+    result=file2String();
+    printJson(result);
+    free(result);
+    return 0;
+}
 
+void printJson(char* string){
+    cJSON *name = NULL;
+    cJSON *names = NULL;
+    cJSON *monitor = cJSON_Parse(string);
+    names = cJSON_GetObjectItemCaseSensitive(monitor, "name");
+   // cJSON_ArrayForEach(name, names) {
+
+        if (cJSON_IsString(name) && (name->valuestring != NULL))
+            printf("\n\nNom du pays : %s", name->valuestring);
+        else {
+            printf("\n\nThis country does not exist !");
+            return;
+        }
+   // }
+}
+
+char * file2String(){
+    char * buffer = 0;
+    long length;
+    FILE * f = fopen ("country.JSON", "rb");
+
+    if (f)
+    {
+      fseek (f, 0, SEEK_END);
+      length = ftell (f);
+      fseek (f, 0, SEEK_SET);
+      buffer = malloc (length);
+      if (buffer)
+      {
+        fread (buffer, 1, length, f);
+      }
+      fclose (f);
+    }
+
+    if (buffer)
+    {
+      return buffer;
+    }
+}
+void doFile(char * country){
+    CURL *curl_handle;
+    static const char *pagefilename = "country.JSON";
+    FILE *pagefile;
+    char curl[250];
 
 
     curl_global_init(CURL_GLOBAL_ALL);
@@ -31,7 +79,9 @@ int main(int argc, char *argv[])
     curl_handle = curl_easy_init();
 
     /* set URL to get here */
-    curl_easy_setopt(curl_handle, CURLOPT_URL, "http://restcountries.eu/rest/v2/name/france");
+
+    sprintf(curl,"http://restcountries.eu/rest/v2/name/%s",country);
+    curl_easy_setopt(curl_handle, CURLOPT_URL,curl );
 
     /* Switch on full protocol/debug output while testing */
     curl_easy_setopt(curl_handle, CURLOPT_VERBOSE, 1L);
@@ -61,9 +111,8 @@ int main(int argc, char *argv[])
     curl_easy_cleanup(curl_handle);
 
     curl_global_cleanup();
-
-    return 0;
-}
+    //system("cls");
+    }
 
 
 
