@@ -5,6 +5,13 @@
 #include <curl/curl.h>
 
 char * file2String();
+void zerofgets(char * str, int size);
+static size_t write_data(void *ptr, size_t size, size_t nmemb, void *stream);
+void printJson(char* string);
+char * file2String();
+void doFile(char * country);
+
+
 void zerofgets(char * str, int size)
 {
     fflush(stdin);
@@ -19,17 +26,50 @@ static size_t write_data(void *ptr, size_t size, size_t nmemb, void *stream)
 
 int main(int argc, char *argv[])
 {
-    doFile("germany");
+    int state=0;
+    int errorChar=0;
+    char country[20];
+    char stay;
     char * result = malloc(file2String());
-    result=file2String();
-    printJson(result);
+
+    while(state==0){
+
+        fflush(stdin);
+        printf("\nSaisissez un pays: ");
+        scanf("%s",&country);
+
+        doFile(country);
+        result=file2String();
+        printJson(result);
+
+        printf("\n\n");
+
+        while(errorChar==0){
+            fflush(stdin);
+            printf("Voulez vous saisir un autre pays? (o/n): ");
+            scanf("%c",&stay);
+            if(stay == 'o'){
+                state=0;
+                errorChar=1;
+            }else if(stay == 'n'){
+                state=1;
+                errorChar=1;
+            }else{
+                errorChar=0;
+                system("cls");
+                printf("\nChar non reconnu, retapez\n");
+            }
+        }
+        errorChar=0;
+    }
+
     free(result);
     return 0;
 }
 
 void printJson(char* string){
     cJSON *name = NULL;
-    cJSON *names = NULL;
+    //cJSON *names = NULL;
     cJSON *monitor = cJSON_Parse(string);
    //cJSON_AddItemToObject(names, "name",monitor);
     cJSON_ArrayForEach(name, monitor) {
