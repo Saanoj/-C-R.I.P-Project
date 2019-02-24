@@ -68,20 +68,52 @@ int main(int argc, char *argv[])
 }
 
 void printJson(char* string){
-    cJSON *name = NULL;
-    //cJSON *names = NULL;
-    cJSON *monitor = cJSON_Parse(string);
-   //cJSON_AddItemToObject(names, "name",monitor);
-    cJSON_ArrayForEach(name, monitor) {
-        if (cJSON_IsString(name) && (name->valuestring != NULL))
-            printf("\n\nNom du pays : %s", name->valuestring);
 
-        else {
-            printf("\n\nThis country does not exist !");
-            return;
+    cJSON *root = cJSON_Parse(string);
+
+    cJSON *name = cJSON_GetObjectItem(root, "name");
+    cJSON *alpha3Code = cJSON_GetObjectItem(root, "alpha3Code");
+    cJSON *capital = cJSON_GetObjectItem(root, "capital");
+    cJSON *population = cJSON_GetObjectItem(root, "population");
+    cJSON *latlngs = cJSON_GetObjectItem(root, "latlng");
+    cJSON *latlng;
+    cJSON *borders = cJSON_GetObjectItem(root, "borders");
+    cJSON *border;
+    cJSON *bordersCount = cJSON_GetArraySize(borders);
+    int i;
+
+    if (cJSON_IsString(name) && (name->valuestring != NULL) && cJSON_IsString(alpha3Code) && (alpha3Code->valuestring != NULL) &&
+        cJSON_IsString(capital) && (capital->valuestring != NULL) && cJSON_IsNumber(population) && (population->valueint != NULL)){
+
+        printf("\nNom du pays : %s", name->valuestring);
+        printf("\nCapitale : %s", capital->valuestring);
+
+        printf("\nCode pays : %s", alpha3Code->valuestring);
+        printf("\nPopulation : %d habitants", population->valueint);
+
+        for (i = 0; i < 2; i++) {
+            latlng = cJSON_GetArrayItem(latlngs, i)->valueint;
+            if(i==0){
+                printf("\nLongitude: %d degres", latlng);
+            }else if(i==1){
+                printf("\nLatitude: %d degres", latlng);
+            }
         }
-        break;
+
+        printf("\nPays limitrophes: ");
+        if(bordersCount != 0){
+            for (i = 0; i < bordersCount; i++) {
+                latlng = cJSON_GetArrayItem(borders, i)->valuestring;
+                printf(" %s,", latlng);
+            }
+        }else{
+            printf(" Pas de pays voisins");
+        }
+    }else{
+        printf("\nCe pays n'existe pas !");
+        return;
     }
+
 }
 
 char * file2String(){
