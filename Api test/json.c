@@ -8,9 +8,14 @@
 
 
 void printJson(char* string){
-    name(string);
+    if(name(string)==1){
     region(string);
     currencies(string);
+    area(string);
+    population(string);
+    }else{
+    printf("\n\nCe pays n'existe pas!");
+    }
 
 }
 
