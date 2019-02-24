@@ -1,10 +1,11 @@
 # depslib dependency file v1.0
-1550949731 source:c:\users\jonas\onedrive\documents\r.i.p-project\api test\main.c
+1551016494 source:c:\users\jonas\onedrive\documents\r.i.p-project\api test\main.c
 	<stdio.h>
 	<stdlib.h>
 	<unistd.h>
 	"cJSON.h"
 	<curl/curl.h>
+	"json.h"
 
 1545326105 source:c:\users\jonas\onedrive\documents\r.i.p-project\api test\cjson.c
 	<string.h>
@@ -37,5 +38,26 @@
 	<stdlib.h>
 	<unistd.h>
 	"cJSON.h"
+	<curl/curl.h>
+
+1551016647 c:\users\jonas\onedrive\documents\r.i.p-project\api test\json.h
+
+1551017449 source:c:\users\jonas\onedrive\documents\r.i.p-project\api test\json.c
+	<stdio.h>
+	<stdlib.h>
+	<unistd.h>
+	<curl/curl.h>
+	"cJSON.h"
+	"json.h"
+	"print.h"
+
+1551017431 c:\users\jonas\onedrive\documents\r.i.p-project\api test\print.h
+
+1551019251 source:c:\users\jonas\onedrive\documents\r.i.p-project\api test\print.c
+	<stdio.h>
+	<stdlib.h>
+	<unistd.h>
+	"cJSON.h"
+	"json.h"
 	<curl/curl.h>
 

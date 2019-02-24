@@ -39,10 +39,17 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="cJSON.h" />
+		<Unit filename="json.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="json.h" />
 		<Unit filename="main.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="tests/common.h" />
+		<Unit filename="print.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="print.h" />
 		<Extensions>
 			<code_completion />
 			<envvars />
