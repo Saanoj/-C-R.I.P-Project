@@ -10,6 +10,8 @@
 void printJson(char* string){
     if(name(string)==1){
     region(string);
+    capital(string);
+    languages(string);
     currencies(string);
     area(string);
     population(string);

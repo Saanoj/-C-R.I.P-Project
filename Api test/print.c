@@ -30,6 +30,30 @@ void region(char* string)
     region = cJSON_GetObjectItemCaseSensitive(monitor, "region");
     printf("\nLa région du pays est : %s", region->valuestring);
 }
+void capital(char* string)
+{
+    cJSON *capital = NULL;
+    cJSON *monitor = cJSON_Parse(string);
+    capital = cJSON_GetObjectItemCaseSensitive(monitor, "capital");
+    printf("\nLa capital est %s", capital->valuestring);
+}
+
+void languages(char* string)
+{
+    cJSON *languages = NULL;
+    cJSON *monitor = cJSON_Parse(string);
+    cJSON *language = NULL;
+    cJSON *nativeName = NULL;
+    cJSON *symbol = NULL;
+
+    languages = cJSON_GetObjectItemCaseSensitive(monitor,"languages");
+    cJSON_ArrayForEach(language, languages)
+    {
+        nativeName = cJSON_GetObjectItemCaseSensitive(language, "nativeName");
+    }
+    printf("\nLa langue est le %s ",nativeName->valuestring);
+}
+
 void currencies(char* string)
 {
     cJSON *currencies = NULL;
