@@ -14,7 +14,7 @@ int main(int argc, char *argv[])
     int errorChar=0;
     char country[20];
     char stay;
-    char * result = malloc(file2String());
+    doFileIp();
 
     while(state==0){
 
@@ -22,10 +22,11 @@ int main(int argc, char *argv[])
         printf("\nSaisissez un pays: ");
         scanf("%s",&country);
 
-        doFile(country);
-        result=file2String();
-        printJson(result);
-
+        doFileCountry(country);
+        char * result = malloc(file2String("country.JSON"));
+        result=file2String("country.JSON");
+        printJsonCountry(result);
+        free(result);
         printf("\n\n");
 
         while(errorChar==0){
@@ -46,6 +47,5 @@ int main(int argc, char *argv[])
         errorChar=0;
     }
 
-    free(result);
     return 0;
 }
