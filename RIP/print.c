@@ -86,3 +86,51 @@ void area(char* string)
     area = cJSON_GetObjectItemCaseSensitive(monitor, "area");
     printf("\nLe pays fait %d m²", area->valueint);
 }
+
+char* getCountry(char* string)
+{
+    cJSON *country = NULL;
+    cJSON *monitor = cJSON_Parse(string);
+    country = cJSON_GetObjectItemCaseSensitive(monitor, "country");
+    puts(string);
+    return country->valuestring;
+}
+char* getParis(char* string)
+{
+    cJSON *city = NULL;
+    cJSON *monitor = cJSON_Parse(string);
+    city = cJSON_GetObjectItemCaseSensitive(monitor, "city");
+    puts(string);
+    return city->valuestring;
+}
+
+void adresse(char* string)
+{
+    cJSON *records = NULL;
+    cJSON *monitor = cJSON_Parse(string);
+    cJSON *record = NULL;
+    cJSON *field = NULL;
+    cJSON *adresse_complete = NULL;
+    cJSON *fields = NULL;
+
+    records = cJSON_GetObjectItemCaseSensitive(monitor,"records");
+
+    puts("Addresse de tabac  dans votre arrondissement:");
+
+    cJSON_ArrayForEach(record, records)
+    {
+
+    fields = cJSON_GetObjectItemCaseSensitive(record,"fields");
+
+        cJSON_ArrayForEach(field, fields)
+        {
+            adresse_complete = cJSON_GetObjectItemCaseSensitive(fields, "adresse_complete");
+                }
+            if (adresse_complete->valuestring != NULL && cJSON_IsString(adresse_complete)){
+            printf("%s\n", adresse_complete->valuestring);
+        }
+
+    }
+
+
+}

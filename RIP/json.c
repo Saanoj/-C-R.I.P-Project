@@ -15,7 +15,7 @@ static size_t write_data(void *ptr, size_t size, size_t nmemb, void *stream)
     return written;
 }
 
-char * file2String(char* file){
+char * file2StringCountry(char* file){
     char * buffer = 0;
     long length;
     FILE * f = fopen (file, "rb");
@@ -25,6 +25,30 @@ char * file2String(char* file){
       fseek (f, -1, SEEK_END);
       length = ftell (f);
       fseek (f, +1, SEEK_SET);
+      buffer = malloc (length);
+      if (buffer)
+      {
+        fread (buffer, 1, length, f);
+      }
+      fclose (f);
+    }
+
+    if (buffer)
+    {
+      return buffer;
+    }
+}
+
+char * file2String(char* file){
+    char * buffer = 0;
+    long length;
+    FILE * f = fopen (file, "rb");
+
+    if (f)
+    {
+      fseek (f, 0, SEEK_END);
+      length = ftell (f);
+      fseek (f, 0, SEEK_SET);
       buffer = malloc (length);
       if (buffer)
       {
@@ -56,7 +80,7 @@ void doFileIp(){
     /* set URL to get here */
 
 
-    curl_easy_setopt(curl_handle, CURLOPT_URL,"http://ip-api.com/json?fields=query,city,country" );
+    curl_easy_setopt(curl_handle, CURLOPT_URL,"http://ip-api.com/json?fields=query,city,country,region" );
 
     /* Switch on full protocol/debug output while testing */
     curl_easy_setopt(curl_handle, CURLOPT_VERBOSE, 1L);
@@ -152,6 +176,53 @@ void doFileCountry(char * country){
     system("cls");
     }
 
+void doFileZip(int zip){
+    CURL *curl_handle;
+    static const char *pagefilename = "zip.JSON";
+    FILE *pagefile;
+    char curl[250];
+
+
+    curl_global_init(CURL_GLOBAL_ALL);
+
+    /* init the curl session */
+    curl_handle = curl_easy_init();
+
+    /* set URL to get here */
+
+    sprintf(curl,"http://opendata.paris.fr/api/records/1.0/search/?dataset=commercesparis&refine.arro=%d&refine.libact=Café+-+Tabac",zip);
+    curl_easy_setopt(curl_handle, CURLOPT_URL,curl );
+
+    /* Switch on full protocol/debug output while testing */
+    curl_easy_setopt(curl_handle, CURLOPT_VERBOSE, 1L);
+
+    /* disable progress meter, set to 0L to enable and disable debug output */
+    curl_easy_setopt(curl_handle, CURLOPT_NOPROGRESS, 1L);
+
+    /* send all data to this function  */
+    curl_easy_setopt(curl_handle, CURLOPT_WRITEFUNCTION, write_data);
+
+    /* open the file */
+    pagefile = fopen(pagefilename, "wb");
+    if(pagefile)
+    {
+
+        /* write the page body to this file handle */
+        curl_easy_setopt(curl_handle, CURLOPT_WRITEDATA, pagefile);
+
+        /* get it! */
+        curl_easy_perform(curl_handle);
+
+        /* close the header file */
+        fclose(pagefile);
+    }
+
+    /* cleanup curl stuff */
+    curl_easy_cleanup(curl_handle);
+
+    curl_global_cleanup();
+    system("cls");
+    }
 
 
 
