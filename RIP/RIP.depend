@@ -74,7 +74,7 @@
 1545326105 c:\users\jonas\onedrive\documents\r.i.p-project\rip\cjson.h
 	<stddef.h>
 
-1552521523 source:c:\users\jonas\onedrive\documents\r.i.p-project\rip\main.c
+1552571942 source:c:\users\jonas\onedrive\documents\r.i.p-project\rip\main.c
 	<stdio.h>
 	<stdlib.h>
 	<unistd.h>
@@ -85,7 +85,7 @@
 
 1552520009 c:\users\jonas\onedrive\documents\r.i.p-project\rip\json.h
 
-1552520404 source:c:\users\jonas\onedrive\documents\r.i.p-project\rip\print.c
+1552525537 source:c:\users\jonas\onedrive\documents\r.i.p-project\rip\print.c
 	<stdio.h>
 	<stdlib.h>
 	<unistd.h>

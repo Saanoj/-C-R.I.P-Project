@@ -12,8 +12,8 @@ int main(int argc, char **argv)
     system("cls");
     int state=0;
     int errorChar=1;
-    char* country = malloc(40);
-    char* geoParis = malloc(40);
+    char* country;
+    char* geoParis;
     char country2[40];
     int zip;
 
@@ -31,13 +31,12 @@ int main(int argc, char **argv)
             if (res=='O' || res == 'o')
             {
                 doFileIp();
-                char * result = malloc(file2String("ip.JSON"));
+                char * result;
                 result=file2String("ip.JSON");
                 geoParis = getParis(result);
                 country = getCountry(result);
                 doFileCountry(country);
-                free(country);
-                free(result);
+
                 errorChar = 0;
             }
             else if(res == 'N' ||res =='n')
@@ -62,10 +61,10 @@ int main(int argc, char **argv)
 
 
 
-        char * result = malloc(file2StringCountry("country.JSON"));
+        char * result;
         result=file2StringCountry("country.JSON");
         printJsonCountry(result);
-        free(result);
+
         printf("\n\n");
 
         //geoParis = "Paris";
@@ -81,12 +80,11 @@ int main(int argc, char **argv)
                 result=file2String("zip.JSON");
 
                 adresse(result);
-                free(result);
+
             }
         }
 
 
-        free(geoParis);
 
 
         while(errorChar==0)
@@ -117,7 +115,7 @@ int main(int argc, char **argv)
 }
 
 int checkZip(int zip){
-    int tab[20] = {75001,7502,7503,75004,75005,75006,75007,7508,75008,75010,75011,75012,75012,75014,75015,75016,75017,75018,75019,75020};
+    int tab[20] = {75001,75002,75003,75004,75005,75006,75007,7508,75008,75010,75011,75012,75012,75014,75015,75016,75017,75018,75019,75020};
     int i;
     for(i = 0;i<20;i++){
         if(tab[i]==zip)
