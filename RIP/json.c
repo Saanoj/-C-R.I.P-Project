@@ -7,14 +7,15 @@
 #include "print.h"
 
 
-
-
+//wirte data sert a écrire le json dans un fichier
+//ici static permet a la fonction de rester dans ce fichier
+//le void * est un pointeur vide il pointe vers aucun type précis
 static size_t write_data(void *ptr, size_t size, size_t nmemb, void *stream)
 {
     size_t written = fwrite(ptr, size, nmemb, (FILE *)stream);
     return written;
 }
-
+//on prend le fichier et on le met dans un string
 char * file2StringCountry(char* file){
     char * buffer = 0;
     long length;
@@ -38,7 +39,7 @@ char * file2StringCountry(char* file){
       return buffer;
     }
 }
-
+// encore un file2String permet de faire mettre fichier en string
 char * file2String(char* file){
     char * buffer = 0;
     long length;
@@ -64,7 +65,7 @@ char * file2String(char* file){
 }
 
 //JSON IP
-
+// on curl pour l'ip et on l'écrit dans un fichier
 void doFileIp(){
     CURL *curl_handle;
     static const char *pagefilename = "ip.JSON";
@@ -115,6 +116,7 @@ void doFileIp(){
 
 
 //json country
+//on imprime le tous
 void printJsonCountry(char* string){
     if(name(string)==1){
     region(string);
