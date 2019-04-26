@@ -68,7 +68,7 @@ void menu()
 
 }
 
-printResult(){
+void printResult(){
     char * result;
     result=file2StringCountry("country.JSON");// on met le ficher de pays dans un string
     printJsonCountry(result); // on imprime tous le tralala
